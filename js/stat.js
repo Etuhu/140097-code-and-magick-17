@@ -10,6 +10,7 @@ var DISTANCE_BETWEEN = 50;
 var TEXT_HEIGHT = 15;
 var BAR_WIDTH = 40;
 var MAX_HEIGHT = 180;
+var BAR_WIDTH_SUM = BAR_WIDTH + DISTANCE_BETWEEN;
 var barHeight = MAX_HEIGHT - TEXT_HEIGHT * 2;
 // стандартная (максимальная) высота столбца равняется 150
 var topGap = CLOUD_HEIGHT - barHeight - TEXT_HEIGHT * 2;
@@ -32,6 +33,8 @@ var getMaxElement = function (arr) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
+  var maxTime = getMaxElement(times);
+
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#ffffff');
 
@@ -41,17 +44,19 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Ура вы победили!', 120, 30);
   ctx.fillText('Список результатов:', 120, 50);
 
-  var maxTime = getMaxElement(times);
-
   for (var i = 0; i < names.length; i++) {
-    ctx.fillText(Math.round(times[i]), LEFT_GAP + (BAR_WIDTH + DISTANCE_BETWEEN) * i, topGap - TEXT_HEIGHT * 1.5 + MAX_HEIGHT - TEXT_HEIGHT * 2 - (barHeight * times[i]) / maxTime);
-    var color = 'rgba(0, 0, 255, 1)';
+    ctx.fillText(Math.round(times[i]), LEFT_GAP + BAR_WIDTH_SUM * i, topGap - TEXT_HEIGHT * 3 + MAX_HEIGHT - (barHeight * times[i]) / maxTime);
+    var getRandomSaturation = function () {
+      return Math.random();
+    };
+    var randomSaturation = 'rgba(0, 0, 255, ' + getRandomSaturation() + ')';
     if (names[i] === 'Вы') {
-      color = 'rgba(255, 0, 0, 1)';
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+      ctx.fillStyle = randomSaturation;
     }
-    ctx.fillStyle = color;
-    ctx.fillRect(LEFT_GAP + (BAR_WIDTH + DISTANCE_BETWEEN) * i, topGap + MAX_HEIGHT - TEXT_HEIGHT * 2 - (barHeight * times[i]) / maxTime, BAR_WIDTH, (barHeight * times[i]) / maxTime);
+    ctx.fillRect(LEFT_GAP + BAR_WIDTH_SUM * i, topGap + MAX_HEIGHT - TEXT_HEIGHT * 2 - (barHeight * times[i]) / maxTime, BAR_WIDTH, (barHeight * times[i]) / maxTime);
     ctx.fillStyle = '#000000';
-    ctx.fillText(names[i], LEFT_GAP + (BAR_WIDTH + DISTANCE_BETWEEN) * i, topGap + barHeight + TEXT_HEIGHT / 1.5);
+    ctx.fillText(names[i], LEFT_GAP + BAR_WIDTH_SUM * i, topGap + barHeight + TEXT_HEIGHT / 1.5);
   }
 };
