@@ -9,6 +9,21 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template').c
 var userDialog = document.querySelector('.setup');
 var fragment = document.createDocumentFragment();
 
+var setup = document.querySelector('.setup');
+var setupOpenButton = document.querySelector('.setup-open');
+var setupCloseButton = setup.querySelector('.setup-close');
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+};
+
+setupOpenButton.addEventListener('click', openPopup);
+setupCloseButton.addEventListener('click', closePopup);
+
 userDialog.classList.remove('hidden');
 document.querySelector('.setup-similar').classList.remove('hidden');
 
