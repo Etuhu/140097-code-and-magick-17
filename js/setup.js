@@ -18,21 +18,25 @@ var fireballsColor = document.querySelector('.setup-fireball-wrap');
 var coatColorInput = document.querySelector('input[name="coat-color"]');
 var eyesColorInput = document.querySelector('input[name="eyes-color"]');
 var fireballsColorInput = document.querySelector('input[name="fireball-color"]');
+var usernameInput = document.querySelector('input[name="username"]');
 
 var setupOpenButton = document.querySelector('.setup-open');
 var setupCloseButton = userDialog.querySelector('.setup-close');
-// var inputUsernameFocus = document.activeElement;
 
 var getRandom = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+// Открытие/закрытие окна настройки персонажа
 // userDialog.classList.remove('hidden');
 
-// Открытие/закрытие окна настройки персонажа
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closePopup();
+  if (usernameInput === document.activeElement) {
+    return evt;
+  } else {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closePopup();
+    }
   }
 };
 
@@ -45,10 +49,6 @@ var closePopup = function () {
   userDialog.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
 };
-
-// if (document.querySelector('.setup-user-name') === inputUsernameFocus) {
-//   document.removeEventListener('keydown', onPopupEscPress);
-// }
 
 setupOpenButton.addEventListener('click', function () {
   openPopup();
@@ -72,23 +72,23 @@ setupCloseButton.addEventListener('keydown', function (evt) {
 
 // Изменение цвета мантии персонажа
 mainCoatColor.addEventListener('click', function () {
-  mainCoatColor.style.fill = COAT_COLORS[getRandom(1, COAT_COLORS.length)];
-  var mainCoatColorValue = mainCoatColor.style.fill;
-  coatColorInput.value = mainCoatColorValue;
+  coatColorInput.value = COAT_COLORS[getRandom(1, COAT_COLORS.length)];
+  var mainCoatColorValue = coatColorInput.value;
+  mainCoatColor.style.fill = mainCoatColorValue;
 });
 
 // Изменение цвета глаз персонажа
 mainEyesColor.addEventListener('click', function () {
-  mainEyesColor.style.fill = EYES_COLORS[getRandom(1, EYES_COLORS.length)];
-  var mainEyesColorValue = mainEyesColor.style.fill;
-  eyesColorInput.value = mainEyesColorValue;
+  eyesColorInput.value = EYES_COLORS[getRandom(1, EYES_COLORS.length)];
+  var mainEyesColorValue = eyesColorInput.value;
+  mainEyesColor.style.fill = mainEyesColorValue;
 });
 
 // Изменение цвета файерболлов
 fireballsColor.addEventListener('click', function () {
-  fireballsColor.style.background = FIREBALLS_COLORS[getRandom(1, FIREBALLS_COLORS.length)];
-  var fireballsColorValue = fireballsColor.style.background;
-  fireballsColorInput.value = fireballsColorValue;
+  fireballsColorInput.value = FIREBALLS_COLORS[getRandom(1, FIREBALLS_COLORS.length)];
+  var fireballsColorValue = fireballsColorInput.value;
+  fireballsColor.style.backgroundColor = fireballsColorValue;
 });
 
 // Генерирование похожих персонажей
