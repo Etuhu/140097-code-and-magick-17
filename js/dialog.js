@@ -1,35 +1,28 @@
 'use strict';
 
 (function () {
-  var FIREBALLS_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+  var userDialog = document.querySelector('.setup');
 
   var defaultCoordsUserDialog = {
-    x: window.util.userDialog.style.left,
-    y: window.util.userDialog.style.top
+    x: userDialog.style.left,
+    y: userDialog.style.top
   };
 
-  var mainWizard = document.querySelector('.setup-wizard');
-  var mainCoatColor = mainWizard.querySelector('.wizard-coat');
-  var mainEyesColor = mainWizard.querySelector('.wizard-eyes');
-  var fireballsColor = document.querySelector('.setup-fireball-wrap');
-  var coatColorInput = document.querySelector('input[name="coat-color"]');
-  var eyesColorInput = document.querySelector('input[name="eyes-color"]');
-  var fireballsColorInput = document.querySelector('input[name="fireball-color"]');
   var usernameInput = document.querySelector('input[name="username"]');
-  var dialogHandle = window.util.userDialog.querySelector('.upload');
+  var dialogHandle = userDialog.querySelector('.upload');
 
   var setupOpenButton = document.querySelector('.setup-open');
-  var setupCloseButton = window.util.userDialog.querySelector('.setup-close');
+  var setupCloseButton = userDialog.querySelector('.setup-close');
 
   var bagWithArtifacts = document.querySelector('.setup-artifacts');
   var starArtifact = document.querySelector('#draggedStar');
 
-  window.userDialog = window.util.userDialog;
+  window.userDialog = userDialog;
 
   // Устанавливает координаты расположения окна настроек персонажа по умолчанию
   var setDefaultCoordsUserDialog = function () {
-    window.util.userDialog.style.left = defaultCoordsUserDialog.x;
-    window.util.userDialog.style.top = defaultCoordsUserDialog.y;
+    userDialog.style.left = defaultCoordsUserDialog.x;
+    userDialog.style.top = defaultCoordsUserDialog.y;
   };
 
   var onPopupEscPress = function (evt) {
@@ -44,13 +37,13 @@
   };
 
   var openPopup = function () {
-    window.util.userDialog.classList.remove('hidden');
+    userDialog.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
     setDefaultCoordsUserDialog();
   };
 
   var closePopup = function () {
-    window.util.userDialog.classList.add('hidden');
+    userDialog.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
     setDefaultCoordsUserDialog();
   };
@@ -100,8 +93,8 @@
         y: moveEvt.clientY
       };
 
-      window.util.userDialog.style.top = (window.util.userDialog.offsetTop - shift.y) + 'px';
-      window.util.userDialog.style.left = (window.util.userDialog.offsetLeft - shift.x) + 'px';
+      userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';
+      userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
     };
 
     var onMouseUp = function (upEvt) {
@@ -121,27 +114,6 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  });
-
-  // Изменение цвета мантии персонажа
-  mainCoatColor.addEventListener('click', function () {
-    coatColorInput.value = window.setup.COAT_COLORS[window.util.getRandom(1, window.setup.COAT_COLORS.length)];
-    var mainCoatColorValue = coatColorInput.value;
-    mainCoatColor.style.fill = mainCoatColorValue;
-  });
-
-  // Изменение цвета глаз персонажа
-  mainEyesColor.addEventListener('click', function () {
-    eyesColorInput.value = window.setup.EYES_COLORS[window.util.getRandom(1, window.setup.EYES_COLORS.length)];
-    var mainEyesColorValue = eyesColorInput.value;
-    mainEyesColor.style.fill = mainEyesColorValue;
-  });
-
-  // Изменение цвета файерболлов
-  fireballsColor.addEventListener('click', function () {
-    fireballsColorInput.value = FIREBALLS_COLORS[window.util.getRandom(1, FIREBALLS_COLORS.length)];
-    var fireballsColorValue = fireballsColorInput.value;
-    fireballsColor.style.backgroundColor = fireballsColorValue;
   });
 
   // Добавление функции перетаскивания предметов из магазина в рюкзак
