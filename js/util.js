@@ -11,6 +11,6 @@
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: ENTER_KEYCODE,
-    getRandom: getRandom,
+    getRandom: getRandom
   };
 })();

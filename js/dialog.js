@@ -17,6 +17,8 @@
   var bagWithArtifacts = document.querySelector('.setup-artifacts');
   var starArtifact = document.querySelector('#draggedStar');
 
+  var form = userDialog.querySelector('.setup-wizard-form');
+
   window.userDialog = userDialog;
 
   // Устанавливает координаты расположения окна настроек персонажа по умолчанию
@@ -114,6 +116,14 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  });
+
+  // Добавляет закрытие окна настроек после успешной отправки данных персонажа на сервер
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      userDialog.classList.add('hidden');
+    }, window.generateWizards.errorHandler);
+    evt.preventDefault();
   });
 
   // Добавление функции перетаскивания предметов из магазина в рюкзак
