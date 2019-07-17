@@ -22,6 +22,7 @@
     // for (var i = 0; i < takeNumber; i++) {
     //   similarList.appendChild(renderWizard(data[i]));
     // }
+    similarList.innerHTML = '';
     for (var i = 0; i < takeNumber; i++) {
       fragment.appendChild(renderWizard(data[i]));
     }

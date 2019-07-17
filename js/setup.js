@@ -12,6 +12,8 @@
   var coatColorInput = document.querySelector('input[name="coat-color"]');
   var eyesColorInput = document.querySelector('input[name="eyes-color"]');
   var fireballsColorInput = document.querySelector('input[name="fireball-color"]');
+  var currentCoatColor;
+  var currentEyesColor;
 
   // Изменение цвета мантии персонажа
   mainCoatColor.addEventListener('click', function () {
@@ -19,6 +21,7 @@
     var mainCoatColorValue = coatColorInput.value;
     mainCoatColor.style.fill = mainCoatColorValue;
     currentCoatColor = mainCoatColorValue;
+    window.generateWizards.updateWizards();
   });
 
   // Изменение цвета глаз персонажа
@@ -27,6 +30,7 @@
     var mainEyesColorValue = eyesColorInput.value;
     mainEyesColor.style.fill = mainEyesColorValue;
     currentEyesColor = mainEyesColorValue;
+    window.generateWizards.updateWizards();
   });
 
   // Изменение цвета файерболлов
@@ -35,4 +39,9 @@
     var fireballsColorValue = fireballsColorInput.value;
     fireballsColor.style.backgroundColor = fireballsColorValue;
   });
+
+  window.setup = {
+    currentCoatColor: currentCoatColor,
+    currentEyesColor: currentEyesColor
+  };
 })();
