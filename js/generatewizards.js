@@ -12,21 +12,52 @@
   var coatColorInput = document.querySelector('input[name="coat-color"]');
   var eyesColorInput = document.querySelector('input[name="eyes-color"]');
   var fireballsColorInput = document.querySelector('input[name="fireball-color"]');
+
   var currentCoatColor;
   var currentEyesColor;
-
   var wizards = [];
 
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === currentCoatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === currentEyesColor) {
+      rank += 1;
+    }
+
+    return rank;
+  };
+
+  var namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
   var updateWizards = function () {
+    window.render(wizards.sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
+  };
 
-    var sameCoatWizards = wizards.filter(function (it) {
-      return it.colorCoat === currentCoatColor;
-    });
-    var sameEyesWizards = wizards.filter(function (it) {
-      return it.colorEyes === currentEyesColor;
-    });
+  window.wizard.onEyesChange = function (color) {
+    currentEyesColor = color;
+    updateWizards();
+  };
 
-    window.render(sameCoatWizards.concat(sameEyesWizards).concat(wizards));
+  window.wizard.onCoatChange = function (color) {
+    currentCoatColor = color;
+    updateWizards();
   };
 
   // Изменение цвета мантии персонажа
