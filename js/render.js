@@ -18,10 +18,6 @@
 
   var render = function (data) {
     var takeNumber = data.length > 4 ? 4 : data.length;
-    // similarList.innerHTML = '';
-    // for (var i = 0; i < takeNumber; i++) {
-    //   similarList.appendChild(renderWizard(data[i]));
-    // }
     similarList.innerHTML = '';
     for (var i = 0; i < takeNumber; i++) {
       fragment.appendChild(renderWizard(data[i]));
