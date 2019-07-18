@@ -19,7 +19,7 @@
     var mainCoatColorValue = coatColorInput.value;
     mainCoatColor.style.fill = mainCoatColorValue;
     window.util.currentCoatColor = mainCoatColorValue;
-    window.generateWizards.updateWizards();
+    window.generateWizards.onCoatChange();
   });
 
   // Изменение цвета глаз персонажа
@@ -28,7 +28,7 @@
     var mainEyesColorValue = eyesColorInput.value;
     mainEyesColor.style.fill = mainEyesColorValue;
     window.util.currentEyesColor = mainEyesColorValue;
-    window.generateWizards.updateWizards();
+    window.generateWizards.onEyesChange();
   });
 
   // Изменение цвета файерболлов
@@ -37,11 +37,4 @@
     var fireballsColorValue = fireballsColorInput.value;
     fireballsColor.style.backgroundColor = fireballsColorValue;
   });
-
-  var wizard = {
-    onEyesChange: function () {},
-    onCoatChange: function () {}
-  };
-
-  window.wizard = wizard;
 })();

@@ -36,13 +36,11 @@
     }));
   };
 
-  window.wizard.onEyesChange = window.util.debounce(function (color) {
-    window.util.currentEyesColor = color;
+  var onEyesChange = window.util.debounce(function () {
     updateWizards();
   });
 
-  window.wizard.onCoatChange = window.util.debounce(function (color) {
-    window.util.currentCoatColor = color;
+  var onCoatChange = window.util.debounce(function () {
     updateWizards();
   });
 
@@ -65,7 +63,9 @@
 
   window.generateWizards = {
     errorHandler: errorHandler,
-    updateWizards: updateWizards
+    updateWizards: updateWizards,
+    onEyesChange: onEyesChange,
+    onCoatChange: onCoatChange
   };
 
   window.backend.load(loadHandler, errorHandler);
