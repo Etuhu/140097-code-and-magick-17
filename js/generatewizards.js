@@ -1,28 +1,52 @@
 'use strict';
 
 (function () {
-  var similarListElement = document.querySelector('.setup-similar-list');
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-  var fragment = document.createDocumentFragment();
+  var wizards = [];
 
-  // Загрузка и отрисовка похожих персонажей
-  var renderWizard = function (wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
+  var getRank = function (wizard) {
+    var rank = 0;
 
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
+    if (wizard.colorCoat === window.util.currentCoatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === window.util.currentEyesColor) {
+      rank += 1;
+    }
 
-    return wizardElement;
+    return rank;
   };
 
-  var loadHandler = function (wizards) {
-    for (var i = 0; i < 4; i++) {
-      fragment.appendChild(renderWizard(wizards[window.util.getRandom(0, wizards.length - 1)]));
+  var namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
     }
-    similarListElement.appendChild(fragment);
+  };
 
-    window.userDialog.querySelector('.setup-similar').classList.remove('hidden');
+  var updateWizards = function () {
+    window.render(wizards.sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
+  };
+
+  var onEyesChange = window.util.debounce(function () {
+    updateWizards();
+  });
+
+  var onCoatChange = window.util.debounce(function () {
+    updateWizards();
+  });
+
+  var loadHandler = function (data) {
+    wizards = data;
+    updateWizards();
   };
 
   var errorHandler = function (errorMessage) {
@@ -38,7 +62,10 @@
   };
 
   window.generateWizards = {
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    updateWizards: updateWizards,
+    onEyesChange: onEyesChange,
+    onCoatChange: onCoatChange
   };
 
   window.backend.load(loadHandler, errorHandler);

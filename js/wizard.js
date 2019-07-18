@@ -18,6 +18,8 @@
     coatColorInput.value = COAT_COLORS[window.util.getRandom(1, COAT_COLORS.length)];
     var mainCoatColorValue = coatColorInput.value;
     mainCoatColor.style.fill = mainCoatColorValue;
+    window.util.currentCoatColor = mainCoatColorValue;
+    window.generateWizards.onCoatChange();
   });
 
   // Изменение цвета глаз персонажа
@@ -25,6 +27,8 @@
     eyesColorInput.value = EYES_COLORS[window.util.getRandom(1, EYES_COLORS.length)];
     var mainEyesColorValue = eyesColorInput.value;
     mainEyesColor.style.fill = mainEyesColorValue;
+    window.util.currentEyesColor = mainEyesColorValue;
+    window.generateWizards.onEyesChange();
   });
 
   // Изменение цвета файерболлов
