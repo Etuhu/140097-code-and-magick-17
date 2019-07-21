@@ -13,23 +13,27 @@
   var eyesColorInput = document.querySelector('input[name="eyes-color"]');
   var fireballsColorInput = document.querySelector('input[name="fireball-color"]');
 
-  // Изменение цвета мантии персонажа
-  mainCoatColor.addEventListener('click', function () {
-    coatColorInput.value = COAT_COLORS[window.util.getRandom(1, COAT_COLORS.length)];
-    var mainCoatColorValue = coatColorInput.value;
-    mainCoatColor.style.fill = mainCoatColorValue;
-    window.util.currentCoatColor = mainCoatColorValue;
-    window.generateWizards.onCoatChange();
-  });
-
-  // Изменение цвета глаз персонажа
-  mainEyesColor.addEventListener('click', function () {
+  var onEyesChange = window.util.debounce(function () {
     eyesColorInput.value = EYES_COLORS[window.util.getRandom(1, EYES_COLORS.length)];
     var mainEyesColorValue = eyesColorInput.value;
     mainEyesColor.style.fill = mainEyesColorValue;
     window.util.currentEyesColor = mainEyesColorValue;
-    window.generateWizards.onEyesChange();
+    window.generateWizards.updateWizards();
   });
+
+  var onCoatChange = window.util.debounce(function () {
+    coatColorInput.value = COAT_COLORS[window.util.getRandom(1, COAT_COLORS.length)];
+    var mainCoatColorValue = coatColorInput.value;
+    mainCoatColor.style.fill = mainCoatColorValue;
+    window.util.currentCoatColor = mainCoatColorValue;
+    window.generateWizards.updateWizards();
+  });
+
+  // Изменение цвета мантии персонажа
+  mainCoatColor.addEventListener('click', onCoatChange);
+
+  // Изменение цвета глаз персонажа
+  mainEyesColor.addEventListener('click', onEyesChange);
 
   // Изменение цвета файерболлов
   fireballsColor.addEventListener('click', function () {

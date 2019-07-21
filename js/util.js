@@ -8,6 +8,18 @@
   var currentCoatColor;
   var currentEyesColor;
 
+  var getMaxElement = function (arr) {
+    var maxElement = arr[0];
+
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] > maxElement) {
+        maxElement = arr[i];
+      }
+    }
+
+    return maxElement;
+  };
+
   var getRandom = function (min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
@@ -26,13 +38,24 @@
     };
   };
 
+  var sortingValues = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: ENTER_KEYCODE,
-    DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL,
     getRandom: getRandom,
+    getMaxElement: getMaxElement,
     debounce: debounce,
     currentCoatColor: currentCoatColor,
-    currentEyesColor: currentEyesColor
+    currentEyesColor: currentEyesColor,
+    sortingValues: sortingValues
   };
 })();
